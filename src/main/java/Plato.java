@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class Plato {
@@ -8,14 +10,29 @@ public class Plato {
         System.out.println("What would you like to do?");
         System.out.println("______________________________________");
 
+        List<String> tasks = new ArrayList<>();
+
         while (sc.hasNext()) {
             String userInput = sc.nextLine();
-            System.out.println("______________________________________");
-            System.out.println("     " + userInput);
-            System.out.println("______________________________________");
             if (userInput.equals("Farewell")) {
+                System.out.println("______________________________________");
                 System.out.println("Farewell. Hope to see you soon!");
+                System.out.println("______________________________________");
                 break;
+            }
+            if (userInput.equals("tasks?")) {
+                System.out.println("______________________________________");
+                System.out.println("Here is your list of tasks: ");
+                for (int i = 0; i < tasks.size(); i++) {
+                    System.out.println((i + 1) + ". " + tasks.get(i));
+                }
+                System.out.println("______________________________________");
+            }
+            else {
+                tasks.add(userInput);
+                System.out.println("______________________________________");
+                System.out.println("I have thus added this task: " + userInput);
+                System.out.println("______________________________________");
             }
         }
     }
