@@ -101,7 +101,8 @@ public class Plato {
                     }
                     int id = Integer.parseInt(parts[1]) - 1;
                     if (id < 0 || id >= tasks.size()) { // Validate the index range
-                        throw new PlatoException("Task number out of range. Please provide a valid task number between 1 and " + tasks.size() + ".");
+                        throw new PlatoException("Task number out of range. " +
+                                "Please provide a valid task number between 1 and " + tasks.size() + ".");
                     }
                     Task tobeunmarked = tasks.get(id);
                     System.out.println("______________________________________");
@@ -109,7 +110,25 @@ public class Plato {
                     tobeunmarked.markAsNotDone();
                     System.out.println(tobeunmarked);
                     System.out.println("______________________________________");
-                } else {
+                } else if (userInput.startsWith("delete")) {
+                    String[] parts = userInput.split(" ");
+                    if (parts.length != 2) {
+                        throw new PlatoException("Invalid format for delete. " +
+                                "Use: 'delete <task_number>'.");
+                    }
+                    int id = Integer.parseInt(parts[1]) - 1;
+                    if (id < 0 || id >= tasks.size()) {
+                        throw new PlatoException("Task number out of range. " +
+                                "Please provide a valid task number between 1 and " + tasks.size() + ".");
+                    }
+                    Task tobedeleted = tasks.get(id);
+                    System.out.println("______________________________________");
+                    System.out.println("Congratulations. Deleting this task: " + tobedeleted.getDescription());
+                    tasks.remove(id);
+                    System.out.println("You now have " + tasks.size() + " tasks.");
+                    System.out.println("______________________________________");
+                    }
+                else {
                     throw new PlatoException("Unknown command. Please try again with a valid command.");
                 }
             } catch (PlatoException e) {
