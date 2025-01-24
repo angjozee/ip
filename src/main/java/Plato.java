@@ -53,7 +53,7 @@ public class Plato {
             }
             else if (userInput.equals("tasks?")) {
                 System.out.println("______________________________________");
-                System.out.println("Here is your list of tasks: ");
+                System.out.println("Here is your list of tasks:");
                 for (int i = 0; i < tasks.size(); i++) {
                     System.out.println((i + 1) + ". " + tasks.get(i).toString());
                 }
