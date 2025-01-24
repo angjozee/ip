@@ -2,34 +2,46 @@ ______________________________________
 Greetings, I am Plato. Nice to meet you!
 What would you like to do?
 ______________________________________
-Alright. Added your task borrow book to the list.
+______________________________________
+Error: The description of a todo shall not be empty. Do provide a task description.
+______________________________________
+Alright. Added your task Read a book to the list.
 You now have 1 tasks.
 ______________________________________
-Alright. Added your task return book to the list. Do it by Sunday.
+______________________________________
+Error: Invalid format for deadline. Use the format: 'deadline <description> /by <date>'.
+______________________________________
+Alright. Added your task Finish homework to the list. Do it by tomorrow.
 You now have 2 tasks.
 ______________________________________
-Alright. Added your task project meeting to the list. Do it from Mon 2pm to 4pm.
+______________________________________
+Error: Invalid format for event. Use the format: 'event <description> /from <date> /to <date>'.
+______________________________________
+Alright. Added your task Meeting to the list. Do it from Monday 10am to 12pm.
 You now have 3 tasks.
 ______________________________________
 ______________________________________
-Here is your list of tasks:
-1. [T][ ] borrow book
-2. [D][ ] return book (by: Sunday)
-3. [E][ ] project meeting (from: Mon 2pm to: 4pm)
+Error: Task number out of range. Please provide a valid task number between 1 and 3.
 ______________________________________
 ______________________________________
 Well done. Marking this task as done.
-[T][X] borrow book
+[T][X] Read a book
+______________________________________
+______________________________________
+Error: Task number out of range. Please provide a valid task number between 1 and 3.
 ______________________________________
 ______________________________________
 Alright. Marking this task as not done.
-[D][ ] return book (by: Sunday)
+[D][ ] Finish homework (by: tomorrow)
 ______________________________________
 ______________________________________
 Here is your list of tasks:
-1. [T][X] borrow book
-2. [D][ ] return book (by: Sunday)
-3. [E][ ] project meeting (from: Mon 2pm to: 4pm)
+1. [T][X] Read a book
+2. [D][ ] Finish homework (by: tomorrow)
+3. [E][ ] Meeting (from: Monday 10am to: 12pm)
+______________________________________
+______________________________________
+Error: Unknown command. Please try again with a valid command.
 ______________________________________
 ______________________________________
 Farewell. Hope to see you soon!
