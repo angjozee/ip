@@ -11,7 +11,7 @@ public class Plato {
         System.out.println("______________________________________");
 
 
-        List<Task> tasks = new ArrayList<>();
+        List<Task> tasks = PlatoFileWriter.loadTasksFromFile();
 
 
         while (sc.hasNext()) {
@@ -26,6 +26,7 @@ public class Plato {
                     }
                     Task task = new Deadline(split[0], split[1]);
                     tasks.add(task);
+                    PlatoFileWriter.saveTasksToFile(tasks);
                     System.out.println("Alright. Added your task " + task.getDescription() + "to the list. " +
                             "Do it by " + split[1] + ".");
                     System.out.println("You now have " + tasks.size() + " tasks.");
@@ -40,6 +41,7 @@ public class Plato {
                     String description = userInput.substring(5);
                     Task task = new ToDo(description);
                     tasks.add(task);
+                    PlatoFileWriter.saveTasksToFile(tasks);
                     System.out.println("Alright. Added your task " + task.getDescription() + " to the list.");
                     System.out.println("You now have " + tasks.size() + " tasks.");
                     System.out.println("______________________________________");
@@ -55,6 +57,7 @@ public class Plato {
                     }
                     Task task = new Event(split[0], split[1].trim(), split[2].trim());
                     tasks.add(task);
+                    PlatoFileWriter.saveTasksToFile(tasks);
                     System.out.println("Alright. Added your task " + task.getDescription() + "to the list."
                         + " Do it from" + split[1] + "to" + split[2] + ".");
                     System.out.println("You now have " + tasks.size() + " tasks.");
@@ -90,6 +93,7 @@ public class Plato {
                     System.out.println("______________________________________");
                     System.out.println("Well done. Marking this task as done.");
                     tobemarked.markAsDone();
+                    PlatoFileWriter.saveTasksToFile(tasks);
                     System.out.println(tobemarked);
                     System.out.println("______________________________________");
                 }
@@ -108,6 +112,7 @@ public class Plato {
                     System.out.println("______________________________________");
                     System.out.println("Alright. Marking this task as not done.");
                     tobeunmarked.markAsNotDone();
+                    PlatoFileWriter.saveTasksToFile(tasks);
                     System.out.println(tobeunmarked);
                     System.out.println("______________________________________");
                 } else if (userInput.startsWith("delete")) {
@@ -125,6 +130,7 @@ public class Plato {
                     System.out.println("______________________________________");
                     System.out.println("Congratulations. Deleting this task: " + tobedeleted.getDescription());
                     tasks.remove(id);
+                    PlatoFileWriter.saveTasksToFile(tasks);
                     System.out.println("You now have " + tasks.size() + " tasks.");
                     System.out.println("______________________________________");
                     }

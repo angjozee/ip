@@ -25,6 +25,10 @@ public class Task {
         isDone = false;
     }
 
+    public String toFileFormat() {
+        return type.name().charAt(0) + " || " + getStatusIcon() + " || " + description;
+    }
+
     @Override
     public String toString() {
         return "[" + type.name().charAt(0) + "]" + "[" + getStatusIcon() + "] " + getDescription();
