@@ -1,6 +1,12 @@
+package plato.command;
 
+import plato.exception.PlatoException;
+import plato.model.Task;
+import plato.model.TaskList;
+import plato.storage.Storage;
+import plato.ui.Ui;
 
-class MarkCommand extends Command {
+public class MarkCommand extends Command {
     private int taskNumber;
     private boolean isMark;
 

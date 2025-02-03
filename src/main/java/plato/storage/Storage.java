@@ -1,3 +1,8 @@
+package plato.storage;
+
+import plato.exception.PlatoException;
+import plato.model.Task;
+import plato.parser.Parser;
 
 public class Storage {
     private String filePath;

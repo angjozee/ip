@@ -1,4 +1,11 @@
+package plato;
 
+import plato.command.Command;
+import plato.exception.PlatoException;
+import plato.parser.Parser;
+import plato.storage.Storage;
+import plato.model.TaskList;
+import plato.ui.Ui;
 
 public class Plato {
     private Storage storage;

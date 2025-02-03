@@ -1,3 +1,7 @@
+package plato.model;
+
+import plato.exception.PlatoException;
+
 import java.util.ArrayList;
 import java.util.List;
 

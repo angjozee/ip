@@ -1,3 +1,10 @@
+package plato.storage;
+
+import plato.model.Deadline;
+import plato.model.Event;
+import plato.model.Task;
+import plato.model.ToDo;
+
 import java.io.*;
 import java.util.List;
 import java.util.ArrayList;

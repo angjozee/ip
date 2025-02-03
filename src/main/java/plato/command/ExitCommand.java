@@ -1,3 +1,8 @@
+package plato.command;
+
+import plato.model.TaskList;
+import plato.storage.Storage;
+import plato.ui.Ui;
 
 public class ExitCommand extends Command {
     @Override

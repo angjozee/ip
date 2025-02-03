@@ -1,4 +1,8 @@
+package plato.parser;
 
+import plato.command.*;
+import plato.exception.PlatoException;
+import plato.model.*;
 
 public class Parser {
     public static Command parse(String userInput) throws PlatoException {

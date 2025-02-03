@@ -1,8 +1,15 @@
+package plato.command;
+
+import plato.exception.PlatoException;
+import plato.model.*;
+import plato.storage.Storage;
+import plato.ui.Ui;
+
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 
-class AddCommand extends Command {
+public class AddCommand extends Command {
     private String description;
     private TaskType type;
     private static final DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HHmm");
