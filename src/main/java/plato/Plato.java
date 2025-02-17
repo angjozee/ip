@@ -1,3 +1,5 @@
+package plato;
+
 import plato.command.Command;
 import plato.exception.PlatoException;
 import plato.parser.Parser;
