@@ -30,13 +30,30 @@ public class Storage {
     }
 
     public void saveTasksToFile(java.util.List<Task> tasks) throws PlatoException {
-        try (java.io.BufferedWriter bw = new java.io.BufferedWriter(new java.io.FileWriter(filePath))) {
-            for (Task task : tasks) {
-                bw.write(task.toFileFormat());
-                bw.newLine();
+        try {
+            java.io.File file = new java.io.File(filePath);
+            java.io.File directory = file.getParentFile();  // Get the parent folder
+
+            // Create the folder if it doesn't exist
+            if (directory != null && !directory.exists()) {
+                boolean dirCreated = directory.mkdirs();
+                if (!dirCreated) {
+                    throw new PlatoException("Failed to create directory: " + directory.getAbsolutePath());
+                }
+            }
+
+            // Write tasks to file
+            try (java.io.BufferedWriter bw = new java.io.BufferedWriter(new java.io.FileWriter(file))) {
+                for (Task task : tasks) {
+                    bw.write(task.toFileFormat());
+                    bw.newLine();
+                }
             }
         } catch (java.io.IOException e) {
-            throw new PlatoException("Error saving tasks to file.");
+            e.printStackTrace();  // Print the full error message
+            throw new PlatoException("Error saving tasks to file: " + e.getMessage());
         }
     }
+
+
 }
