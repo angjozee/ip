@@ -1,16 +1,29 @@
 package plato.storage;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
 import plato.model.Deadline;
 import plato.model.Event;
 import plato.model.Task;
 import plato.model.ToDo;
 
-import java.io.*;
-import java.util.List;
-import java.util.ArrayList;
-
+/**
+ * Handles file operations for saving and loading tasks.
+ */
 public class PlatoFileWriter {
 
+    /**
+     * Saves the list of tasks to a file.
+     *
+     * @param tasks The list of tasks to be saved.
+     */
     public static void saveTasksToFile(List<Task> tasks) {
         try {
             File directory = new File("./data");
@@ -28,6 +41,11 @@ public class PlatoFileWriter {
         }
     }
 
+    /**
+     * Loads the list of tasks from a file.
+     *
+     * @return A list of tasks retrieved from the file.
+     */
     public static List<Task> loadTasksFromFile() {
         List<Task> tasks = new ArrayList<>();
         File file = new File("./data/plato.txt");
@@ -53,7 +71,7 @@ public class PlatoFileWriter {
                     String[] deadlineParts = parts[2].split(" \\| ");
                     if (deadlineParts.length != 2) {
                         System.out.println("Warning: Skipping corrupted deadline task - " + line);
-                    continue;
+                        continue;
                     }
                     task = new Deadline(deadlineParts[0], deadlineParts[1]);
                     break;
@@ -61,7 +79,7 @@ public class PlatoFileWriter {
                     String[] eventParts = parts[2].split(" \\| ");
                     if (eventParts.length != 3) {
                         System.out.println("Warning: Skipping corrupted event task - " + line);
-                    continue;
+                        continue;
                     }
                     task = new Event(eventParts[0], eventParts[1], eventParts[2]);
                     break;

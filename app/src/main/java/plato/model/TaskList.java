@@ -1,10 +1,13 @@
 package plato.model;
 
-import plato.exception.PlatoException;
-
 import java.util.ArrayList;
 import java.util.List;
 
+import plato.exception.PlatoException;
+
+/**
+ * Represents a list of tasks
+ */
 public class TaskList {
     private List<Task> tasks;
 
@@ -27,6 +30,9 @@ public class TaskList {
         return tasks.get(index);
     }
 
+    /**
+     * Represents a method to delete a task based on the index in the list.
+     */
     public void deleteTask(int index) throws PlatoException {
         if (index < 0 || index >= tasks.size()) {
             throw new PlatoException("Task number out of range.");

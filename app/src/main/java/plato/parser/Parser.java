@@ -1,8 +1,18 @@
 package plato.parser;
 
-import plato.command.*;
+import plato.command.AddCommand;
+import plato.command.Command;
+import plato.command.DeleteCommand;
+import plato.command.ExitCommand;
+import plato.command.FindCommand;
+import plato.command.ListCommand;
+import plato.command.MarkCommand;
 import plato.exception.PlatoException;
-import plato.model.*;
+import plato.model.Deadline;
+import plato.model.Event;
+import plato.model.Task;
+import plato.model.TaskType;
+import plato.model.ToDo;
 
 /**
  * Parses user input and returns the corresponding command.
@@ -47,26 +57,49 @@ public class Parser {
      * @param line A line from the storage file representing a task.
      * @return The corresponding Task object.
      */
-    public static Task parseTask(String line) {
-        String[] parts = line.split(" \\| ");
+    public static Task parseTask(String line) throws PlatoException {
+        String[] parts = line.split(" \\|\\| ");
+
+        // Ensure the line has at least 3 parts (task type, status, description)
+        if (parts.length < 3) {
+            throw new PlatoException("Corrupted task data (invalid format): " + line);
+        }
+
+        String type = parts[0].trim();
+        String status = parts[1].trim(); // Can be "X" or empty
+        String description = parts[2].trim(); // Always present
+
+        if (description.isEmpty()) {
+            throw new PlatoException("Invalid task format: Missing description in " + line);
+        }
+
         Task task;
-        boolean isDone = parts[1].trim().equals("X");
-        switch (parts[0]) {
+        switch (type) {
         case "T":
-            task = new ToDo(parts[2]);
+            task = new ToDo(description);
             break;
         case "D":
-            task = new Deadline(parts[2], parts[3]);
+            if (parts.length != 4) {
+                throw new PlatoException("Invalid deadline task format: " + line);
+            }
+            task = new Deadline(description, parts[3].trim());
             break;
         case "E":
-            task = new Event(parts[2], parts[3], parts[4]);
+            if (parts.length != 5) {
+                throw new PlatoException("Invalid event task format: " + line);
+            }
+            task = new Event(description, parts[3].trim(), parts[4].trim());
             break;
         default:
-            throw new IllegalArgumentException("Unknown task type in file.");
+            throw new PlatoException("Unknown task type: " + type);
         }
-        if (isDone) {
+
+        // Fix: Handle empty status field correctly
+        if (status.equals("X")) {
             task.markAsDone();
         }
+
         return task;
     }
+
 }

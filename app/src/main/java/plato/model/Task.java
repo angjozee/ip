@@ -1,10 +1,19 @@
 package plato.model;
 
+/**
+ * Represents a task with description and type.
+ */
 public class Task {
     protected String description;
     protected boolean isDone;
     protected TaskType type;
 
+    /**
+     * Constructs a task with a description and type.
+     *
+     * @param description The description of the task.
+     * @param type The type of task
+     */
     public Task(String description, TaskType type) {
         this.description = description;
         this.isDone = false;

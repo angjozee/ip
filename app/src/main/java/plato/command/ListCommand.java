@@ -5,6 +5,9 @@ import plato.model.TaskList;
 import plato.storage.Storage;
 import plato.ui.Ui;
 
+/**
+ * Represents a command to list tasks in the task list.
+ */
 public class ListCommand extends Command {
     @Override
     public void execute(TaskList tasks, Ui ui, Storage storage) throws PlatoException {
