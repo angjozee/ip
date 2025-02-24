@@ -19,18 +19,19 @@ public class Deadline extends Task {
         try {
             return LocalDateTime.parse(by, inputFormat);
         } catch (DateTimeParseException e) {
-            throw new IllegalArgumentException("Invalid date format! Use: yyyy-MM-dd HHmm " +
+            throw new IllegalArgumentException("Invalid date format! Use: yyyy-MM-dd HHmm " + 
                     "(e.g., 2024-22-02 0800)");
         }
     }
 
     @Override
     public String toFileFormat() {
-        return super.toFileFormat() + "|| " + by.format(inputFormat);
+        return super.toFileFormat() + " || " + by.format(inputFormat);
     }
+
 
     @Override
     public String toString() {
-        return super.toString() + "(by: " + by.format(outputFormat) + ")";
+        return super.toString() + " (by: " + by.format(outputFormat) + ")";
     }
 }

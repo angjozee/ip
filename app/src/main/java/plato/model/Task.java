@@ -35,10 +35,11 @@ public class Task {
     public void markAsNotDone() {
         isDone = false;
     }
-
+    
     public String toFileFormat() {
-        return type.name().charAt(0) + " || " + getStatusIcon() + " || " + description;
+        return type.name().charAt(0) + " || " + (isDone ? "X" : " ") + " || " + description.trim();
     }
+
 
     @Override
     public String toString() {

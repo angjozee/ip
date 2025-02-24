@@ -37,21 +37,36 @@ public class Storage {
     public List<Task> loadTasksFromFile() throws PlatoException {
         List<Task> tasks = new ArrayList<>();
         File file = new File(filePath);
+
+        System.out.println("DEBUG: Looking for file at -> " + file.getAbsolutePath());
+
         if (!file.exists()) {
-            return tasks; // Return an empty list if the file doesn't exist.
+            System.out.println("ERROR: File does not exist.");
+            return tasks; // Return empty list if file is missing
         }
+
+        System.out.println("DEBUG: Loading tasks from " + filePath);
 
         try (BufferedReader br = new BufferedReader(new FileReader(file))) {
             String line;
             while ((line = br.readLine()) != null) {
-                tasks.add(Parser.parseTask(line));
+                System.out.println("DEBUG: Read line -> '" + line + "'");
+                try {
+                    Task task = Parser.parseTask(line);
+                    tasks.add(task);
+                    System.out.println("DEBUG: Successfully loaded -> " + task);
+                } catch (IllegalArgumentException e) {
+                    System.out.println("WARNING: Skipping invalid task -> " + line);
+                }
             }
         } catch (IOException e) {
             throw new PlatoException("Error reading tasks from file.");
         }
+
+        System.out.println("DEBUG: Loaded " + tasks.size() + " tasks.");
         return tasks;
     }
-
+    
     /**
      * Saves the list of tasks to the specified file.
      *

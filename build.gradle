@@ -3,6 +3,7 @@ plugins {
     id 'application'
     id 'com.github.johnrengelman.shadow' version '7.1.2'
     id 'checkstyle'
+    id 'org.openjfx.javafxplugin' version '0.1.0' 
 }
 
 repositories {
@@ -26,6 +27,12 @@ dependencies {
     implementation group: 'org.openjfx', name: 'javafx-graphics', version: javaFxVersion, classifier: 'linux'
 }
 
+tasks.named("startShadowScripts").configure { dependsOn tasks.named("jar") }
+tasks.named("distZip").configure { dependsOn tasks.named("shadowJar") }
+tasks.named("distTar").configure { dependsOn tasks.named("shadowJar") }
+tasks.named("startScripts").configure { dependsOn tasks.named("shadowJar") }
+
+
 test {
     useJUnitPlatform()
 
@@ -41,17 +48,19 @@ test {
 }
 
 application {
-    mainClass.set("plato.Plato")
+    mainClass.set("Launcher")
 }
 
 shadowJar {
-    archiveFileName = 'plato.app.main.jar'
+    archiveBaseName = "Plato"
+    archiveClassifier = null
+}
+
+run {
+    standardInput = System.in
+    enableAssertions = true;
 }
 
 checkstyle {
     toolVersion = '10.2'
-}
-
-run{
-    standardInput = System.in
 }

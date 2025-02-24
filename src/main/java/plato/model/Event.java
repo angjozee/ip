@@ -51,9 +51,10 @@ public class Event extends Task {
      */
     @Override
     public String toFileFormat() {
-        return super.toFileFormat() + "|| " +
-                from.format(inputFormat) + " -> " + to.format(inputFormat);
+        return "E || " + (isDone ? "X" : " ") + " || " + description + 
+                " || " + from.format(inputFormat) + " || " + to.format(inputFormat);
     }
+
 
     /**
      * Returns a string representation of the event task.
@@ -62,7 +63,7 @@ public class Event extends Task {
      */
     @Override
     public String toString() {
-        return super.toString() + "(from: " + from.format(outputFormat) +
+        return super.toString() + " (from: " + from.format(outputFormat) +
                 " to: " + to.format(outputFormat) + ")";
     }
 }
