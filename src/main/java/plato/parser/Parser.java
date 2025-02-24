@@ -20,6 +20,9 @@ public class Parser {
             return new MarkCommand(userInput, false);
         } else if (userInput.startsWith("delete")) {
             return new DeleteCommand(userInput);
+        } else if (userInput.startsWith("find")) {
+            String keyword = userInput.substring(5).trim();
+            return new FindCommand(keyword);
         } else if (userInput.equals("Farewell")) {
             return new ExitCommand();
         } else {
