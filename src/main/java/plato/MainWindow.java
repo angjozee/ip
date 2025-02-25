@@ -7,6 +7,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
+
 /**
  * Controller for the main GUI.
  */
@@ -22,31 +23,50 @@ public class MainWindow extends AnchorPane {
 
     private Plato plato;
 
-    private Image userImage = new Image(this.getClass().getResourceAsStream("/images/DaUser.png"));
-    private Image dukeImage = new Image(this.getClass().getResourceAsStream("/images/DaDuke.png"));
+    private Image userImage = new Image(this.getClass().getResourceAsStream("/images/Russell.png"));
+    private Image platoImage = new Image(this.getClass().getResourceAsStream("/images/Plato.png"));
 
     @FXML
     public void initialize() {
+        assert scrollPane != null : "scrollPane should be initialized";
+        assert dialogContainer != null : "dialogContainer should be initialized";
+        assert userInput != null : "userInput should be initialized";
+        assert sendButton != null : "sendButton should be initialized";
+
         scrollPane.vvalueProperty().bind(dialogContainer.heightProperty());
+
+        // Ensure Plato instance is initialized before greeting
+        if (plato != null) {
+            showWelcomeMessage();
+        }
     }
 
     /** Injects the Plato instance */
     public void setPlato(Plato p) {
         plato = p;
+        showWelcomeMessage(); // Show welcome message as soon as Plato is set
+    }
+
+    /** Displays the chatbot's initial greeting */
+    private void showWelcomeMessage() {
+        dialogContainer.getChildren().add(
+                DialogBox.getDukeDialog("Greetings, I am Plato. Nice to meet you!\nWhat would you like to do?", platoImage)
+        );
     }
 
     /**
-     * Creates two dialog boxes, one echoing user input and the other containing Duke's reply and then appends them to
-     * the dialog container. Clears the user input after processing.
+     * Handles user input by creating two dialog boxes, one for user input and one for Plato's response.
      */
     @FXML
     private void handleUserInput() {
         String input = userInput.getText();
-        String response = plato.getResponse(input);
-        dialogContainer.getChildren().addAll(
-                DialogBox.getUserDialog(input, userImage),
-                DialogBox.getDukeDialog(response, dukeImage)
-        );
-        userInput.clear();
+        if (!input.isEmpty()) {
+            String response = plato.getResponse(input);
+            dialogContainer.getChildren().addAll(
+                    DialogBox.getUserDialog(input, userImage),
+                    DialogBox.getDukeDialog(response, platoImage)
+            );
+            userInput.clear();
+        }
     }
 }
