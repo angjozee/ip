@@ -18,10 +18,12 @@ public class DeleteCommand extends Command {
     }
 
     @Override
-    public void execute(TaskList tasks, Ui ui, Storage storage) throws PlatoException {
+    public String execute(TaskList tasks, Ui ui, Storage storage) throws PlatoException {
         Task task = tasks.getTask(taskNumber);
         tasks.deleteTask(taskNumber);
         storage.saveTasksToFile(tasks.getAllTasks());
-        ui.showMessage("Deleted: " + task);
+
+        return "Deleted: " + task; // Return response
     }
+
 }

@@ -29,17 +29,21 @@ public class FindCommand extends Command {
      * @throws PlatoException If an error occurs during execution.
      */
     @Override
-    public void execute(TaskList tasks, Ui ui, Storage storage) throws PlatoException {
+    public String execute(TaskList tasks, Ui ui, Storage storage) throws PlatoException {
+        StringBuilder response = new StringBuilder("Here are the matching tasks in your list:\n");
         boolean found = false;
-        ui.showMessage("Here are the matching tasks in your list:");
+
         for (int i = 0; i < tasks.size(); i++) {
             if (tasks.getTask(i).getDescription().contains(keyword)) {
-                ui.showMessage((i + 1) + ". " + tasks.getTask(i));
+                response.append(i + 1).append(". ").append(tasks.getTask(i)).append("\n");
                 found = true;
             }
         }
+
         if (!found) {
-            ui.showMessage("No matching tasks found.");
+            response.append("No matching tasks found.");
         }
+
+        return response.toString(); // Return instead of printing
     }
 }

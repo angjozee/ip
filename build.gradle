@@ -48,7 +48,7 @@ test {
 }
 
 application {
-    mainClass.set("Launcher")
+    mainClass.set("plato.Launcher")
 }
 
 shadowJar {
@@ -59,6 +59,11 @@ shadowJar {
 run {
     standardInput = System.in
     enableAssertions = true;
+}
+
+javafx {
+    version = "17.0.7"
+    modules = ['javafx.controls', 'javafx.fxml']
 }
 
 checkstyle {

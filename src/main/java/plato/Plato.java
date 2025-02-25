@@ -1,5 +1,6 @@
 package plato;
 
+import javafx.application.Platform;
 import plato.command.Command;
 import plato.exception.PlatoException;
 import plato.parser.Parser;
@@ -11,6 +12,11 @@ public class Plato {
     private Storage storage;
     private TaskList tasks;
     private Ui ui;
+
+    // No-args constructor
+    public Plato() {
+        this("./data/tasks.txt"); // Provide a default file path
+    }
 
     public Plato(String filePath) {
         ui = new Ui();
@@ -42,6 +48,24 @@ public class Plato {
     }
 
     public static void main(String[] args) {
-        new Plato("./data/tasks.txt").run();
+        new Plato().run(); // Now you can create Plato without parameters
     }
+
+    public String getResponse(String input) {
+        try {
+            Command command = Parser.parse(input);
+            String response = command.execute(tasks, ui, storage);
+
+            // If the command is an exit command, close JavaFX
+            if (command.isExit()) {
+                Platform.exit();
+            }
+
+            return response;
+        } catch (PlatoException e) {
+            return "Error: " + e.getMessage();
+        }
+    }
+
 }
+

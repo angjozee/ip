@@ -20,15 +20,16 @@ public class MarkCommand extends Command {
     }
 
     @Override
-    public void execute(TaskList tasks, Ui ui, Storage storage) throws PlatoException {
+    public String execute(TaskList tasks, Ui ui, Storage storage) throws PlatoException {
         Task task = tasks.getTask(taskNumber);
         if (isMark) {
             task.markAsDone();
-            ui.showMessage("Marked as done: " + task);
+            storage.saveTasksToFile(tasks.getAllTasks());
+            return "Marked as done: " + task; // Return response
         } else {
             task.markAsNotDone();
-            ui.showMessage("Marked as not done: " + task);
+            storage.saveTasksToFile(tasks.getAllTasks());
+            return "Marked as not done: " + task; // Return response
         }
-        storage.saveTasksToFile(tasks.getAllTasks());
     }
 }

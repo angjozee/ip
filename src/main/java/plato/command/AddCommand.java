@@ -37,7 +37,7 @@ public class AddCommand extends Command {
      * @throws PlatoException If the input format is invalid.
      */
     @Override
-    public void execute(TaskList tasks, Ui ui, Storage storage) throws PlatoException {
+    public String execute(TaskList tasks, Ui ui, Storage storage) throws PlatoException {
         Task task;
         if (type == TaskType.TODO) {
             task = new ToDo(description);
@@ -46,22 +46,24 @@ public class AddCommand extends Command {
             if (split.length != 2) {
                 throw new PlatoException("Invalid format for deadline.");
             }
-            validateDateTimeFormat(split[1].trim()); // Validate date format
+            validateDateTimeFormat(split[1].trim());
             task = new Deadline(split[0].trim(), split[1].trim());
         } else {
             String[] split = description.split("/from|/to");
             if (split.length != 3) {
                 throw new PlatoException("Invalid format for event.");
             }
-            validateDateTimeFormat(split[1].trim()); // Validate from date
-            validateDateTimeFormat(split[2].trim()); // Validate to date
+            validateDateTimeFormat(split[1].trim());
+            validateDateTimeFormat(split[2].trim());
             task = new Event(split[0].trim(), split[1].trim(), split[2].trim());
         }
 
         tasks.addTask(task);
         storage.saveTasksToFile(tasks.getAllTasks());
-        ui.showMessage("Added: " + task);
+
+        return "Added: " + task; // Return instead of printing
     }
+
 
     /**
      * Validates whether the given date-time string matches the expected format.
