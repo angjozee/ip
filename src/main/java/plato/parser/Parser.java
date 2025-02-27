@@ -1,10 +1,32 @@
 package plato.parser;
 
-import plato.command.*;
+import plato.command.AddCommand;
+import plato.command.Command;
+import plato.command.DeleteCommand;
+import plato.command.ExitCommand;
+import plato.command.FindCommand;
+import plato.command.ListCommand;
+import plato.command.MarkCommand;
 import plato.exception.PlatoException;
-import plato.model.*;
+import plato.model.Deadline;
+import plato.model.Event;
+import plato.model.Task;
+import plato.model.TaskType;
+import plato.model.ToDo;
 
+
+/**
+ * Handles parsing of user input and saved task data.
+ */
 public class Parser {
+
+    /**
+     * Parses the user input and returns the corresponding command.
+     *
+     * @param userInput The raw input string provided by the user.
+     * @return A {@link Command} object corresponding to the input.
+     * @throws PlatoException If the command is unknown or incorrectly formatted.
+     */
     public static Command parse(String userInput) throws PlatoException {
         if (userInput.equals("tasks?")) {
             return new ListCommand(); // Handle the tasks? command
@@ -30,6 +52,13 @@ public class Parser {
         }
     }
 
+    /**
+     * Parses a task from a formatted string representation stored in a file.
+     *
+     * @param line The string representation of a task from storage.
+     * @return A {@link Task} object created from the stored format.
+     * @throws IllegalArgumentException If the task format is invalid.
+     */
     public static Task parseTask(String line) {
         System.out.println("DEBUG: Reading line -> " + line); // Debugging
 
@@ -57,7 +86,9 @@ public class Parser {
             if (parts.length < 5) {
                 throw new IllegalArgumentException("Invalid event format: " + line);
             }
-            System.out.println("DEBUG: Creating Event task with from -> " + parts[3] + ", to -> " + parts[4]); // Debugging
+            System.out.println("DEBUG: Creating Event task with from -> "
+                    + parts[3] + ", to -> "
+                        + parts[4]); // Debugging
             task = new Event(parts[2].trim(), parts[3].trim(), parts[4].trim());
             break;
         default:
