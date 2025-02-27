@@ -1,21 +1,27 @@
 package plato.command;
 
-import plato.exception.PlatoException;
-import plato.model.*;
-import plato.storage.Storage;
-import plato.ui.Ui;
-
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
+
+import plato.exception.PlatoException;
+import plato.model.Deadline;
+import plato.model.Event;
+import plato.model.Task;
+import plato.model.TaskList;
+import plato.model.TaskType;
+import plato.model.ToDo;
+import plato.storage.Storage;
+import plato.ui.Ui;
+
 
 /**
  * Represents a command to add a task to the task list.
  */
 public class AddCommand extends Command {
+    private static final DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HHmm");
     private String description;
     private TaskType type;
-    private static final DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HHmm");
 
     /**
      * Constructs an AddCommand with the given input and task type.

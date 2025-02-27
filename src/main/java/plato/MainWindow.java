@@ -9,7 +9,8 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 
 /**
- * Controller for the main GUI.
+ * Controller for the main GUI of the Plato chatbot.
+ * Manages user interactions, message display, and chatbot responses.
  */
 public class MainWindow extends AnchorPane {
     @FXML
@@ -26,6 +27,10 @@ public class MainWindow extends AnchorPane {
     private Image userImage = new Image(this.getClass().getResourceAsStream("/images/Russell.png"));
     private Image platoImage = new Image(this.getClass().getResourceAsStream("/images/Plato.png"));
 
+    /**
+     * Initializes the GUI components and sets up scrolling behavior.
+     * Ensures UI elements are properly initialized.
+     */
     @FXML
     public void initialize() {
         assert scrollPane != null : "scrollPane should be initialized";
@@ -41,21 +46,30 @@ public class MainWindow extends AnchorPane {
         }
     }
 
-    /** Injects the Plato instance */
+    /**
+     * Injects the Plato instance into the controller.
+     * Ensures that the chatbot can process user input.
+     *
+     * @param p The Plato chatbot instance.
+     */
     public void setPlato(Plato p) {
         plato = p;
         showWelcomeMessage(); // Show welcome message as soon as Plato is set
     }
 
-    /** Displays the chatbot's initial greeting */
+    /**
+     * Displays the chatbot's initial greeting message in the chat window.
+     */
     private void showWelcomeMessage() {
         dialogContainer.getChildren().add(
-                DialogBox.getDukeDialog("Greetings, I am Plato. Nice to meet you!\nWhat would you like to do?", platoImage)
+                DialogBox.getDukeDialog("Greetings, I am Plato. Nice to meet you!\nWhat would you like to do?",
+                        platoImage)
         );
     }
 
     /**
-     * Handles user input by creating two dialog boxes, one for user input and one for Plato's response.
+     * Handles user input by displaying it in the chat window and generating Plato's response.
+     * The response is added to the dialog container, and the input field is cleared afterward.
      */
     @FXML
     private void handleUserInput() {
