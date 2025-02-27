@@ -1,18 +1,8 @@
 package plato.parser;
 
-import plato.command.AddCommand;
-import plato.command.Command;
-import plato.command.DeleteCommand;
-import plato.command.ExitCommand;
-import plato.command.FindCommand;
-import plato.command.ListCommand;
-import plato.command.MarkCommand;
+import plato.command.*;
 import plato.exception.PlatoException;
-import plato.model.Deadline;
-import plato.model.Event;
-import plato.model.Task;
-import plato.model.TaskType;
-import plato.model.ToDo;
+import plato.model.*;
 
 /**
  * Parses user input and returns the corresponding command.
@@ -79,15 +69,11 @@ public class Parser {
             task = new ToDo(description);
             break;
         case "D":
-            if (parts.length != 4) {
-                throw new PlatoException("Invalid deadline task format: " + line);
-            }
+            if (parts.length != 4) throw new PlatoException("Invalid deadline task format: " + line);
             task = new Deadline(description, parts[3].trim());
             break;
         case "E":
-            if (parts.length != 5) {
-                throw new PlatoException("Invalid event task format: " + line);
-            }
+            if (parts.length != 5) throw new PlatoException("Invalid event task format: " + line);
             task = new Event(description, parts[3].trim(), parts[4].trim());
             break;
         default:
@@ -95,11 +81,12 @@ public class Parser {
         }
 
         // Fix: Handle empty status field correctly
-        if (status.equals("X")) {
+        if (!status.isEmpty() && status.equals("X")) {
             task.markAsDone();
         }
 
         return task;
     }
+
 
 }

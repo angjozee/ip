@@ -60,7 +60,7 @@ public class Plato {
      */
     public static void main(String[] args) {
         try {
-            new Plato("./data/tasks.txt").run();
+            new Plato("../data/tasks.txt").run();
         } catch (Exception e) {
             e.printStackTrace(); // Prints full error log to help debug
         }

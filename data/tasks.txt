@@ -1,2 +1,7 @@
-T ||   || read book
 T || X || eat
+T ||   || eat
+T ||   || read book
+D ||   || sleep || 2003-02-09 0012
+T ||   || fart
+E ||   || poo || 2023-02-09 1900 || 2024-02-09 1300
+T ||   || holiday plan for japabn

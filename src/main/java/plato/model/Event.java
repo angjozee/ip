@@ -9,12 +9,12 @@ import java.time.format.DateTimeParseException;
  */
 public class Event extends Task {
 
-    protected LocalDateTime from;
-    protected LocalDateTime to;
     private static final DateTimeFormatter inputFormat =
             DateTimeFormatter.ofPattern("yyyy-MM-dd HHmm");
     private static final DateTimeFormatter outputFormat =
             DateTimeFormatter.ofPattern("MMM dd yyyy, h:mm a");
+    protected LocalDateTime from;
+    protected LocalDateTime to;
 
     /**
      * Constructs an Event task with a description, start time, and end time.
@@ -51,9 +51,11 @@ public class Event extends Task {
      */
     @Override
     public String toFileFormat() {
-        return super.toFileFormat() + "|| " +
-                from.format(inputFormat) + " -> " + to.format(inputFormat);
+        return "E || " + (isDone ? "X" : " ") + " || " + description
+                + " || " + from.format(inputFormat)
+                + " || " + to.format(inputFormat);
     }
+
 
     /**
      * Returns a string representation of the event task.
@@ -62,7 +64,7 @@ public class Event extends Task {
      */
     @Override
     public String toString() {
-        return super.toString() + "(from: " + from.format(outputFormat) +
-                " to: " + to.format(outputFormat) + ")";
+        return super.toString() + " (from: " + from.format(outputFormat)
+                + " to: " + to.format(outputFormat) + ")";
     }
 }
