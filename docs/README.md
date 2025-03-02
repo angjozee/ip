@@ -59,6 +59,6 @@ Farewell
 
 ## Quick Start
 
-1. **Run Plato** from the terminal using: java -jar Plato.jar
+1. **Run Plato** from the terminal using: java -jar plato.jar
 2. **Enter commands** to manage your tasks.
 3. **Use `tasks?`** to check your tasks anytime.
