@@ -1,7 +1,9 @@
-T || X || eat
-T ||   || eat
-T ||   || read book
-D ||   || sleep || 2003-02-09 0012
-T ||   || fart
-E ||   || poo || 2023-02-09 1900 || 2024-02-09 1300
-T ||   || holiday plan for japabn
+T || X || eat || MEDIUM
+T ||   || eat || MEDIUM
+T ||   || read book || MEDIUM
+T ||   || fart || MEDIUM
+T || X || holiday plan for japabn || MEDIUM
+T ||   || book || MEDIUM
+D ||   || poo || 2025-12-01 1900 || MEDIUM
+D ||   || eat poo || 1900-10-10 1900 || HIGH
+E ||   || eat || 2000-10-10 1900 || 2020-10-10 2000 || HIGH

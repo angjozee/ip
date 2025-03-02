@@ -26,6 +26,29 @@ public class Deadline extends Task {
     }
 
     /**
+     * Constructs a Deadline task with a given description, due date, and priority.
+     *
+     * @param description The description of the task.
+     * @param by The due date and time in the format "yyyy-MM-dd HHmm".
+     * @param priority The priority level of the task.
+     * @throws IllegalArgumentException If the provided date format is invalid.
+     */
+    public Deadline(String description, String by, Priority priority) {
+        super(description, TaskType.DEADLINE);
+        this.by = parseDateTime(by);
+        this.priority = priority;
+    }
+
+    /**
+     * Updates the deadline date.
+     *
+     * @param newBy The new due date in the format "yyyy-MM-dd HHmm".
+     */
+    public void snooze(String newBy) {
+        this.by = parseDateTime(newBy);
+    }
+
+    /**
      * Parses a date-time string into a {@link LocalDateTime} object.
      *
      * @param by The date-time string in the format "yyyy-MM-dd HHmm".
@@ -38,8 +61,17 @@ public class Deadline extends Task {
         } catch (DateTimeParseException e) {
             throw new IllegalArgumentException(
                     "Invalid date format! Use: yyyy-MM-dd HHmm "
-                        + "(e.g., 2024-22-02 0800)");
+                            + "(e.g., 2024-12-02 0800)");
         }
+    }
+
+    /**
+     * Retrieves the formatted deadline date.
+     *
+     * @return A formatted string representation of the deadline.
+     */
+    public String getFormattedDate() {
+        return by.format(outputFormat);
     }
 
     /**
@@ -49,16 +81,13 @@ public class Deadline extends Task {
      */
     @Override
     public String toFileFormat() {
-        return super.toFileFormat() + " || " + by.format(inputFormat);
+        return "D || " + (isDone ? "X" : " ") + " || " + description + " || "
+                + by.format(inputFormat) + " || " + priority.name();
     }
 
-    /**
-     * Returns a string representation of the Deadline task, including its due date.
-     *
-     * @return A string representing the Deadline task.
-     */
     @Override
     public String toString() {
-        return super.toString() + " (by: " + by.format(outputFormat) + ")";
+        return "[D][" + getStatusIcon() + "] " + description
+                + " (by: " + by.format(outputFormat) + ", Priority: " + priority + ")";
     }
 }

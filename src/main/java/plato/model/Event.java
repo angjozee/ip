@@ -30,6 +30,20 @@ public class Event extends Task {
     }
 
     /**
+     * Constructs an Event task with a description, start time, end time, and priority.
+     *
+     * @param description The description of the event.
+     * @param from The start time of the event in the format "yyyy-MM-dd HHmm".
+     * @param to The end time of the event in the format "yyyy-MM-dd HHmm".
+     * @param priority The priority level of the task.
+     */
+    public Event(String description, String from, String to, Priority priority) {
+        super(description, TaskType.EVENT);
+        this.from = parseDateTime(from);
+        this.to = parseDateTime(to);
+        this.priority = priority;
+    }
+    /**
      * Parses a date-time string into a LocalDateTime object.
      *
      * @param dateTime The date-time string to be parsed.
@@ -53,18 +67,19 @@ public class Event extends Task {
     public String toFileFormat() {
         return "E || " + (isDone ? "X" : " ") + " || " + description
                 + " || " + from.format(inputFormat)
-                + " || " + to.format(inputFormat);
+                + " || " + to.format(inputFormat)
+                + " || " + priority.name();
     }
-
 
     /**
      * Returns a string representation of the event task.
      *
-     * @return A string containing the event description, start time, and end time.
+     * @return A string containing the event description, start time, end time, and priority.
      */
     @Override
     public String toString() {
-        return super.toString() + " (from: " + from.format(outputFormat)
-                + " to: " + to.format(outputFormat) + ")";
+        return "[E][" + getStatusIcon() + "] " + description
+                + " (from: " + from.format(outputFormat)
+                + " to: " + to.format(outputFormat) + ", Priority: " + priority + ")";
     }
 }

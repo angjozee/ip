@@ -1,24 +1,30 @@
 package plato.model;
 
 /**
- * Represents a To-Do task, which is a basic task without any deadlines or time constraints.
+ * Represents a To-Do task with a description and priority.
  */
 public class ToDo extends Task {
 
     /**
-     * Constructs a ToDo task with a given description.
+     * Constructs a ToDo task with a description and default priority (MEDIUM).
      *
-     * @param description The description of the task.
+     * @param description The task description.
      */
     public ToDo(String description) {
         super(description, TaskType.TODO);
     }
 
     /**
-     * Converts the task into a file-friendly format for saving.
+     * Constructs a ToDo task with a description and a specific priority.
      *
-     * @return A formatted string representation of the ToDo task for file storage.
+     * @param description The task description.
+     * @param priority The task priority.
      */
+    public ToDo(String description, Priority priority) {
+        super(description, TaskType.TODO);
+        this.priority = priority;
+    }
+
     @Override
     public String toFileFormat() {
         return super.toFileFormat();

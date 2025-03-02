@@ -7,6 +7,7 @@ import java.time.format.DateTimeParseException;
 import plato.exception.PlatoException;
 import plato.model.Deadline;
 import plato.model.Event;
+import plato.model.Priority;
 import plato.model.Task;
 import plato.model.TaskList;
 import plato.model.TaskType;
@@ -22,6 +23,7 @@ public class AddCommand extends Command {
     private static final DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HHmm");
     private String description;
     private TaskType type;
+    private Priority priority;
 
     /**
      * Constructs an AddCommand with the given input and task type.
@@ -29,12 +31,27 @@ public class AddCommand extends Command {
      * @param input The full input string provided by the user.
      * @param type  The type of task to be added (TODO, DEADLINE, or EVENT).
      */
-    public AddCommand(String input, TaskType type) {
+    public AddCommand(String input, TaskType type) throws PlatoException {
         assert input != null && !input.trim().isEmpty() : "Input should not be null or empty";
         assert type != null : "TaskType should not be null";
 
         this.type = type;
-        this.description = input.substring(input.indexOf(" ") + 1).trim();
+        this.priority = Priority.MEDIUM; // Default priority is MEDIUM
+
+        String[] parts = input.split(" ");
+        if (parts.length < 2) {
+            throw new PlatoException("Description cannot be empty.");
+        }
+
+        // Check if the last word is a valid priority level
+        String lastWord = parts[parts.length - 1].toUpperCase();
+        if (isValidPriority(lastWord)) {
+            this.priority = Priority.valueOf(lastWord);
+            this.description = input.substring(input.indexOf(" ") + 1, input.lastIndexOf(" ")).trim();
+        } else {
+            this.description = input.substring(input.indexOf(" ") + 1).trim();
+        }
+
         assert !this.description.isEmpty() : "Description should not be empty";
     }
 
@@ -54,14 +71,14 @@ public class AddCommand extends Command {
 
         Task task;
         if (type == TaskType.TODO) {
-            task = new ToDo(description);
+            task = new ToDo(description, priority);
         } else if (type == TaskType.DEADLINE) {
             String[] split = description.split("/by ");
             assert split.length > 0 : "Deadline task should have a description";
             assert split.length == 2 : "Deadline task should be split into two parts";
 
             validateDateTimeFormat(split[1].trim());
-            task = new Deadline(split[0].trim(), split[1].trim());
+            task = new Deadline(split[0].trim(), split[1].trim(), priority);
         } else {
             String[] split = description.split("/from|/to");
             assert split.length > 0 : "Event task should have a description";
@@ -69,7 +86,7 @@ public class AddCommand extends Command {
 
             validateDateTimeFormat(split[1].trim());
             validateDateTimeFormat(split[2].trim());
-            task = new Event(split[0].trim(), split[1].trim(), split[2].trim());
+            task = new Event(split[0].trim(), split[1].trim(), split[2].trim(), priority);
         }
 
         assert task != null : "Task creation failed";
@@ -94,5 +111,20 @@ public class AddCommand extends Command {
         } catch (DateTimeParseException e) {
             throw new PlatoException("Invalid date format! Use: yyyy-MM-dd HHmm (e.g., 2023-12-02 1800).");
         }
+    }
+
+    /**
+     * Checks if a given string is a valid priority level.
+     *
+     * @param word The word to check.
+     * @return True if it matches a priority level, otherwise false.
+     */
+    private boolean isValidPriority(String word) {
+        for (Priority p : Priority.values()) {
+            if (p.name().equalsIgnoreCase(word)) {
+                return true;
+            }
+        }
+        return false;
     }
 }

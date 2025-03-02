@@ -1,16 +1,16 @@
 package plato.model;
 
 /**
- * Represents a task with a description, completion status, and task type.
+ * Represents a task with a description, completion status, type, and priority level.
  */
 public class Task {
     protected String description;
     protected boolean isDone;
     protected TaskType type;
+    protected Priority priority;
 
     /**
-     * Constructs a new Task with the given description and type.
-     * The task is initially marked as not done.
+     * Constructs a new Task with the given description, type, and default priority (MEDIUM).
      *
      * @param description The description of the task.
      * @param type The type of the task (e.g., TODO, DEADLINE, EVENT).
@@ -19,6 +19,7 @@ public class Task {
         this.description = description;
         this.isDone = false;
         this.type = type;
+        this.priority = Priority.MEDIUM; // Default priority is MEDIUM
     }
 
     /**
@@ -54,21 +55,39 @@ public class Task {
     }
 
     /**
+     * Retrieves the task priority.
+     *
+     * @return The priority level.
+     */
+    public Priority getPriority() {
+        return priority;
+    }
+
+    /**
+     * Sets the task's priority.
+     *
+     * @param priority The new priority level.
+     */
+    public void setPriority(Priority priority) {
+        this.priority = priority;
+    }
+
+    /**
      * Converts the task into a formatted string for file storage.
      *
      * @return A string representation of the task in file format.
      */
     public String toFileFormat() {
-        return type.name().charAt(0) + " || " + getStatusIcon() + " || " + description;
+        return type.name().charAt(0) + " || " + getStatusIcon() + " || " + description + " || " + priority.name();
     }
 
     /**
-     * Returns a string representation of the task, including its type and status.
+     * Returns a string representation of the task, including its type, status, and priority.
      *
      * @return A formatted string representing the task.
      */
     @Override
     public String toString() {
-        return "[" + type.name().charAt(0) + "]" + "[" + getStatusIcon() + "] " + getDescription();
+        return "[" + type.name().charAt(0) + "]" + "[" + getStatusIcon() + "] " + getDescription() + " (Priority: " + priority + ")";
     }
 }
